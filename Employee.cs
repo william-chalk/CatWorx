@@ -1,4 +1,4 @@
-namespace CatWorx.BadeMaker
+namespace CatWorx.BadgeMaker
 {
     class Employee
     {

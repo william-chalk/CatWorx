@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CatWorx.BadeMaker
+namespace CatWorx.BadgeMaker
 {
     class Program
     {
