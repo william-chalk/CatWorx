@@ -6,41 +6,30 @@ namespace CatWorx.BadgeMaker
 {
     class Program
     {
-
-        static List<Employee> GetEmployees()
-        {
-            //Returns a List of strings
-            List<Employee> employees = new List<Employee>();
-
-            while (true)
-            {
-
-                Console.WriteLine("Enter first name (leave empty to exit): ");
-
-                string firstName = Console.ReadLine() ?? "";
-
-                if (firstName == "")
-                {
-                    break;
-                }
-                Console.WriteLine("Enter last name: ");
-                string lastName = Console.ReadLine() ?? "";
-                Console.WriteLine("Enter ID: ");
-                int id = Int32.Parse(Console.ReadLine() ?? "");
-                Console.WriteLine("Enter Photo Url: ");
-                string photoUrl = Console.ReadLine() ?? "";
-                Employee currentEmployee = new Employee(firstName, lastName, id, photoUrl);
-                employees.Add(currentEmployee);
-            }
-            return employees;
-        }
         async static Task Main(string[] args)
         {
-            List<Employee> employees = GetEmployees();
-            Util.PrintEmployees(employees);
-            Util.MakeCSV(employees);
-            await Util.MakeBadges(employees);
-
+            Console.WriteLine("Would you like to randomly generate users? (please type YES or NO).");
+            string userInput = Console.ReadLine() ?? "";
+            var yesInput = new string[] { "YES", "Yes", "yes" };
+            var noInput = new string[] { "NO", "No", "no" };
+            if (yesInput.Contains(userInput))
+            {
+                List<Employee> employees = await PeopleFetcher.GetFromApi();
+                Util.PrintEmployees(employees);
+                Util.MakeCSV(employees);
+                await Util.MakeBadges(employees);
+            }
+            else if (noInput.Contains(userInput))
+            {
+                List<Employee> employees = PeopleFetcher.GetEmployees();
+                Util.PrintEmployees(employees);
+                Util.MakeCSV(employees);
+                await Util.MakeBadges(employees);
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }
